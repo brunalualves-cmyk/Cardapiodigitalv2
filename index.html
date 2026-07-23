@@ -521,8 +521,8 @@
         <!-- NAV PILLS -->
         <div class="nav-wrapper">
             <div class="nav-pills">
-                <button class="nav-pill active" onclick="showCategory(event, 'combos')">🏆 Combos</button>
-                <button class="nav-pill" onclick="showCategory(event, 'tradicional')">🥘 Tradicionais</button>
+                <button class="nav-pill" onclick="showCategory(event, 'combos')">🏆 Combos</button>
+                <button class="nav-pill active" onclick="showCategory(event, 'tradicional')">🥘 Tradicionais</button>
                 <button class="nav-pill" onclick="showCategory(event, 'toasts')">🍞 Toasts</button>
                 <button class="nav-pill" onclick="showCategory(event, 'sobremesas')">🍰 Sobremesas</button>
                 <button class="nav-pill" onclick="showCategory(event, 'croissants')">🥐 Croissants</button>
@@ -537,7 +537,7 @@
         </div>
 
         <!-- ========== COMBOS ========== -->
-        <section id="combos" class="category active">
+        <section id="combos" class="category">
             <div class="category-header">
                 <div class="category-title">🏆 Combos</div>
                 <div class="category-subtitle">Economia + Experiência Completa</div>
@@ -573,7 +573,7 @@
                             <strong>✓</strong> Cookie ou bombom
                         </div>
                         <p class="card-desc">O essencial perfeito. Economia garantida.</p>
-                        <div class="card-price">R$ 46</div>
+                        <div class="card-price">R$ 44</div>
                     </div>
                 </div>
 
@@ -597,7 +597,7 @@
         </section>
 
         <!-- ========== TRADICIONAIS DA CASA ========== -->
-          <div id="tradicional" class="category">
+          <div id="tradicional" class="category active">
             <div class="category-header">
                 <div class="category-title">🥘 Tradicionais da Casa</div>
                 <div class="category-subtitle">Receitas que a gente cuida com carinho</div>
@@ -749,7 +749,7 @@
                     <div class="card-content">
                         <h3 class="card-name">Presunto Toast</h3>
                         <p class="card-desc">Presunto fresco, queijo meloso, tomate e rúcula em pão italiano artesanal.</p>
-                        <div class="card-price">R$ 20</div>
+                        <div class="card-price">R$ 25</div>
                     </div>
                 </div>
             </div>
@@ -772,6 +772,18 @@
                         <h3 class="card-name">Brownie com cobertura</h3>
                         <p class="card-desc">Feito com cacau 100% puro. Com coberturas divinas!.</p>
                         <div class="card-price">A partir de R$15</div>
+                    </div>
+                </div>
+
+                            <div class="grid">
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Cinamon.jpg" alt="Rolinho de Canela" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Rolinho de canela</h3>
+                        <p class="card-desc">Saboroso e delicioso, feito com massa amanteigada e recheio de canela.</p>
+                        <div class="card-price">A partir de R$10</div>
                     </div>
                 </div>
 
@@ -910,7 +922,7 @@
                     <div class="card-content">
                         <h3 class="card-name">Chocolate Quente</h3>
                         <p class="card-desc">Bebida feita com chocolate cremoso de alta qualidade derretido em leite quente.</p>
-                        <div class="card-price">R$ 15 - 18</div>
+                        <div class="card-price">R$ 16 - 19</div>
                     </div>
                 </div>
 
@@ -964,7 +976,7 @@
                     <div class="card-content">
                         <h3 class="card-name">Mocha</h3>
                         <p class="card-desc">Leite cremoso, ganache suave de chocolate artesanal e café bem equilibrado. Quente ou gelado</p>
-                        <div class="card-price">R$ 16</div>
+                        <div class="card-price">R$ 17</div>
                     </div>
                 </div>
 
@@ -975,7 +987,7 @@
                     <div class="card-content">
                         <h3 class="card-name">Caramel Machiato</h3>
                         <p class="card-desc">Espresso, leite vaporizado e xarope de caramelo artesanal feito na casa. Quente ou gelado.</p>
-                        <div class="card-price">R$ 16</div>
+                        <div class="card-price">R$ 17</div>
                     </div>
                 </div>
 
@@ -1095,7 +1107,7 @@
                     <div class="card-content">
                         <h3 class="card-name">Grãos Especiais</h3>
                         <p class="card-desc"><strong>Métodos:</strong> V60, Chemex, Aeropress, Koar. Cada grão possui um sabor diferente!</p>
-                        <div class="card-price">R$ 18+</div>
+                        <div class="card-price">R$ 12+</div>
                     </div>
                 </div>
             </div>
@@ -1117,7 +1129,7 @@
                         <span class="card-badge badge-premium">EXCLUSIVO</span>
                         <h3 class="card-name">Golden Latte</h3>
                         <p class="card-desc">Café com leite e toque de caramelo cremoso artesanal feito diretamente na Gudy!</p>
-                        <div class="card-price">R$ 16</div>
+                        <div class="card-price">R$ 17</div>
                     </div>
                 </div>
 
@@ -1140,7 +1152,7 @@
                     <div class="card-content">
                         <h3 class="card-name">Choco Affogato</h3>
                         <p class="card-desc">Café espresso quente, delicioso sorvete de baunilha e chocolate em calda!</p>
-                        <div class="card-price">R$ 16</div>
+                        <div class="card-price">R$ 17</div>
                     </div>
                 </div>
 
@@ -1208,6 +1220,49 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
+    
+<!-- BOTÃO WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/5533998169501?text=Olá,%20vim%20pelo%20QR%20code%20do%20cardápio%20gostaria%20do%20item..." 
+   target="_blank" 
+   class="whatsapp-button" 
+   title="Fale conosco no WhatsApp">
+    💬 WhatsApp
+</a>
 
+<style>
+    .whatsapp-button {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #25D366;
+        color: white;
+        padding: 16px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .whatsapp-button:hover {
+        background: #1EA752;
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    @media (max-width: 480px) {
+        .whatsapp-button {
+            bottom: 20px;
+            right: 20px;
+            padding: 14px 18px;
+            font-size: 13px;
+        }
+    }
+</style>
 </body>
 </html>

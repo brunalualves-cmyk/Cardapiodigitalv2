@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gudy Coffee - Cardápio Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #101B2D;
+            --gold: #B98A50;
+            --teal: #3E6E64;
+            --cream: #F3F0EA;
+            --text: #333;
+            --muted: #999;
+            --light-border: #e0ddd6;
+            --red-accent: #E74C3C;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--navy) 0%, #0f1620 100%);
+            color: white;
+            padding: 45px 20px 35px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        header h1 {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.8px;
+        }
+
+        header .subtitle {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 18px;
+            font-weight: 300;
+        }
+
+        header .contact {
+            font-size: 13px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        header .contact strong {
+            color: var(--gold);
+            display: block;
+            margin-top: 6px;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 16px;
+        }
+
+        /* ===== HERO BANNER ===== */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--red-accent) 0%, #c0392b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.25);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .hero-banner h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        /* ===== NAV PILLS ===== */
+        .nav-wrapper {
+            background: white;
+            padding: 28px 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 45px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-pills {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+
+        .nav-pill {
+            padding: 11px 22px;
+            border: 2px solid var(--light-border);
+            background: white;
+            color: var(--navy);
+            border-radius: 28px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-pill:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .nav-pill.active {
+            background: var(--gold);
+            color: white;
+            border-color: var(--gold);
+            box-shadow: 0 4px 12px rgba(185, 138, 80, 0.3);
+        }
+
+        /* ===== CATEGORY ===== */
+        .category {
+            display: none;
+        }
+
+        .category.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .category-title {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .category-subtitle {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* ===== GRID ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+        }
+
+        /* ===== CARD BASE ===== */
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1.5px solid var(--light-border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .card.highlight {
+            border: 2.5px solid var(--gold);
+            background: linear-gradient(135deg, rgba(243, 240, 234, 0.4) 0%, white 100%);
+        }
+
+        .card.highlight:hover {
+            box-shadow: 0 18px 36px rgba(185, 138, 80, 0.25);
+        }
+
+        .card.combo {
+            background: linear-gradient(135deg, var(--navy) 0%, #1a2847 100%);
+            color: white;
+            border: 2px solid var(--gold);
+        }
+
+        .card.combo:hover {
+            box-shadow: 0 18px 36px rgba(16, 27, 45, 0.3);
+        }
+
+        .card.combo .card-name {
+            color: var(--gold);
+        }
+
+        .card.combo .card-price {
+            color: #FFD700;
+        }
+
+        .card.combo .card-desc {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ===== CARD IMAGE ===== */
+        .card-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--light-border) 0%, #d6d3cc 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.08);
+        }
+
+        /* ===== CARD CONTENT ===== */
+        .card-content {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 6px 13px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .badge-bestseller {
+            background: var(--teal);
+            color: white;
+        }
+
+        .badge-new {
+            background: var(--red-accent);
+            color: white;
+            animation: pulse-new 1.5s infinite;
+        }
+
+        @keyframes pulse-new {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .badge-premium {
+            background: var(--gold);
+            color: white;
+        }
+
+        .badge-upsell {
+            background: #27AE60;
+            color: white;
+        }
+
+        .card-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.55;
+            margin-bottom: 14px;
+            flex-grow: 1;
+        }
+
+        .combo-list {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 14px;
+            line-height: 1.7;
+        }
+
+        .combo-list strong {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .card-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-top: auto;
+        }
+
+        /* ===== ADDON SECTION ===== */
+        .addon-block {
+            background: var(--navy);
+            color: white;
+            padding: 18px 20px;
+            border-radius: 10px;
+            margin-top: 35px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .addon-block strong {
+            display: block;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ===== FEATURED SECTION ===== */
+        .featured-section {
+            background: white;
+            border: 2.5px solid var(--gold);
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 20px rgba(185, 138, 80, 0.15);
+        }
+
+        .featured-header {
+            background: linear-gradient(90deg, var(--gold) 0%, #a67a40 100%);
+            color: white;
+            padding: 18px 24px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        @media (max-width: 768px) {
+            .featured-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .featured-item {
+            padding: 24px;
+            border-right: 1px solid var(--light-border);
+        }
+
+        .featured-item:last-child {
+            border-right: none;
+        }
+
+        @media (max-width: 768px) {
+            .featured-item {
+                border-right: none;
+                border-bottom: 1px solid var(--light-border);
+            }
+            .featured-item:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .featured-item h3 {
+            font-size: 16px;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .featured-item p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .featured-price {
+            font-size: 22px;
+            color: var(--gold);
+            font-weight: 800;
+        }
+
+        /* ===== SECTION DIVIDER ===== */
+        .section-divider {
+            margin: 50px 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--light-border), transparent);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 50px;
+        }
+
+        footer h3 {
+            font-size: 18px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        footer p {
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 8px;
+        }
+
+        .footer-cta {
+            background: var(--gold);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: inline-block;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 32px;
+            }
+            .category-title {
+                font-size: 24px;
+            }
+            .nav-wrapper {
+                padding: 20px;
+            }
+            .card-content {
+                padding: 18px;
+            }
+            .grid {
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>☕ GUDY COFFEE</h1>
+        <p class="subtitle">Cardápio Digital | Experimente Nossa Especialidade</p>
+        <p class="contact">
+            📍 Av. Visconde do Rio Branco, 718 - Centro - Galeria Juarez Pimenta<br>
+            <strong>☎️ (33) 999816-9501</strong>
+        </p>
+    </header>
+
+    <div class="container">
+
+        <!-- HERO: SMASH ROYAL -->
+        <div class="hero-banner">
+            <h2>🚀 CROISSANT SMASH ROYAL</h2>
+            <p>De novidade para sucesso absoluto! Experimente nosso maior hit!</p>
+        </div>
+
+        <!-- NAV PILLS -->
+        <div class="nav-wrapper">
+            <div class="nav-pills">
+                <button class="nav-pill active" onclick="showCategory(event, 'combos')">🏆 Combos</button>
+                <button class="nav-pill" onclick="showCategory(event, 'tradicional')">🥘 Tradicionais</button>
+                <button class="nav-pill" onclick="showCategory(event, 'toasts')">🍞 Toasts</button>
+                <button class="nav-pill" onclick="showCategory(event, 'sobremesas')">🍰 Sobremesas</button>
+                <button class="nav-pill" onclick="showCategory(event, 'croissants')">🥐 Croissants</button>
+                <button class="nav-pill" onclick="showCategory(event, 'sem-cafe')">☕ S/ Café</button>
+                <button class="nav-pill" onclick="showCategory(event, 'cafes-trad')">☕ Cafés</button>
+                <button class="nav-pill" onclick="showCategory(event, 'bubble')">🫧 Bubble</button>
+                <button class="nav-pill" onclick="showCategory(event, 'oriental')">🍵 Oriental</button>
+                <button class="nav-pill" onclick="showCategory(event, 'especiais')">✨ Especiais</button>
+                <button class="nav-pill" onclick="showCategory(event, 'doces')">💛 Bebidas Doces</button>
+                <button class="nav-pill" onclick="showCategory(event, 'sucos')">🍊 Sucos</button>
+            </div>
+        </div>
+
+        <!-- ========== COMBOS ========== -->
+        <section id="combos" class="category active">
+            <div class="category-header">
+                <div class="category-title">🏆 Combos</div>
+                <div class="category-subtitle">Economia + Experiência Completa</div>
+            </div>
+
+            <div class="featured-section">
+                <div class="featured-header">💰 ECONOMIZE E APROVEITE MAIS</div>
+                <div class="featured-content">
+                    <div class="featured-item">
+                        <h3>Combo Tradicional</h3>
+                        <p>Croissant frango + Cappuccino italiano + Cookie ou bombom</p>
+                        <div class="featured-price">R$ 46</div>
+                    </div>
+                    <div class="featured-item">
+                        <h3>Combo Especial</h3>
+                        <p>Croissant Smash Royal + Cappuccino chocolate + Brownie ou Cookie</p>
+                        <div class="featured-price">R$ 50</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card combo highlight">
+                    <div class="card-image" style="background: var(--navy); display: flex; align-items: center; justify-content: center; color: var(--gold); font-weight: 700; font-size: 18px;">
+                        💼 COMBO
+                    </div>
+                    <div class="card-content">
+                        <div class="card-badge badge-bestseller">MAIS VENDIDO</div>
+                        <h3 class="card-name">Combo Tradicional</h3>
+                        <div class="combo-list">
+                            <strong>✓</strong> Croissant frango<br>
+                            <strong>✓</strong> Cappuccino italiano<br>
+                            <strong>✓</strong> Cookie ou bombom
+                        </div>
+                        <p class="card-desc">O essencial perfeito. Economia garantida.</p>
+                        <div class="card-price">R$ 46</div>
+                    </div>
+                </div>
+
+                <div class="card combo highlight">
+                    <div class="card-image" style="background: var(--gold); display: flex; align-items: center; justify-content: center; color: var(--navy); font-weight: 700; font-size: 18px;">
+                        ⭐ PREMIUM
+                    </div>
+                    <div class="card-content">
+                        <div class="card-badge badge-premium">EXPERIÊNCIA TOTAL</div>
+                        <h3 class="card-name">Combo Especial</h3>
+                        <div class="combo-list">
+                            <strong>✓</strong> Croissant Smash Royal<br>
+                            <strong>✓</strong> Cappuccino chocolate<br>
+                            <strong>✓</strong> Brownie ou Cookie
+                        </div>
+                        <p class="card-desc">Nosso melhor. Você merece.</p>
+                        <div class="card-price">R$ 50</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== TRADICIONAIS DA CASA ========== -->
+          <div id="tradicional" class="category">
+            <div class="category-header">
+                <div class="category-title">🥘 Tradicionais da Casa</div>
+                <div class="category-subtitle">Receitas que a gente cuida com carinho</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="fotos/Gudytoast.png" alt="Gudy Toast" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Gudy Toast</h3>
+                        <p class="card-desc">Pão brioche artesanal, presunto, queijo prato e pesto. O clássico que funciona.</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+                
+                 <div class="card">
+                    <div class="card-image">
+                        <img src="fotos/Dourado.png" alt="Dourado" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Dourado</h3>
+                        <p class="card-desc">Brioche feito na casa, creme de mostarda l'ancienne, queijo prato derretido e redução de vinho.</p>
+                        <div class="card-price">R$ 20</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                       <img src="fotos/Omeletedacasa.jpg" alt="Omelete da Casa" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Omelete da Casa</h3>
+                        <p class="card-desc">Preparada com 3 ovos, queijo provolone, tomate. Temperado com pimenta e sal. Molho pesto.</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                     <img src="fotos/Tapiocadecarne.jpg" alt="Tapioca" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Tapiocas</h3>
+                        <p class="card-desc">Carne bovina desfiada / Frango com requeijão / Presunto com queijo. Escolha o recheio.</p>
+                        <div class="card-price">R$ 22</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/paodequeijorecheado.jpg" alt="Pão de Queijo Recheado" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Pão de Queijo Recheado</h3>
+                        <p class="card-desc">Pão de queijo artesanal recheado. Carne e queijo / Frango e bacon / Burguer e queijo.</p>
+                        <div class="card-price">R$ 17</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Paodequeijocoquetel.jpg" alt="Pão de Queijo Coquetel" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Pão de Queijo Coquetel (6 un)</h3>
+                        <p class="card-desc">Feito com queijo parmesão e provolone. Receita autoral que vicia.</p>
+                        <div class="card-price">R$ 17</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image"> 
+                    <img src="fotos/Quiche.jpg" alt="Quiches" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Quiches</h3>
+                        <p class="card-desc">Tortinha francesa com massa amanteigada. Marguerita / Frango / Franco com Bacon.</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-image">
+                    <img src="fotos/Croquemadame.png" alt="Croque Madame" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-badge badge-premium">🌟 ASSINATURA</div>
+                        <h3 class="card-name">Croque Madame</h3>
+                        <p class="card-desc">Sanduíche francês em brioche, molho bechamel, presunto serrano, queijo parmesão e ovo pochê perfeito.</p>
+                        <div class="card-price">R$ 38</div>
+                    </div>
+                </div>
+            
+
+                     <div class="addon-block">
+                     <strong>➕ ADICIONE NO SEU LANCHE:</strong>
+                     Frango/Carne +R$6 | Bacon +R$5 | Molho de queijo +R$4 | Salada +R$2
+                     </div>
+                  </div>
+             </div>
+        </div>
+        <!-- ========== TOASTS ========== -->
+         <div id="toasts" class="category">
+            <div class="category-header">
+                <div class="category-title">🍞 Toasts</div>
+                <div class="category-subtitle">Pão artesanal | Recheios sofisticados</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                     <div class="card-image">
+                    <img src="fotos/Avocadotoast.jpg" alt="Avocado Toast" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Avocado Toast</h3>
+                        <p class="card-desc">Pasta de abacate temperada, requeijão cremoso, ovo pochê, bacon crocante e pesto fresco.</p>
+                        <div class="card-price">R$ 25</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Toastcaprese.jpg" alt="Toast Caprese" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Toast Caprese</h3>
+                        <p class="card-desc">Tomate fresco, mussarela de qualidade, pesto artesanal e manjericão em pão italiano.</p>
+                        <div class="card-price">R$ 22</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Americantoast.jpg" alt="American Toast" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">American Toast</h3>
+                        <p class="card-desc">Creme de queijo artesanal, mostarda l'ancienne, ovos cremosos, bacon e pesto.</p>
+                        <div class="card-price">R$ 25</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image" style="background: #f1948c; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">
+                        Presunto
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Presunto Toast</h3>
+                        <p class="card-desc">Presunto fresco, queijo meloso, tomate e rúcula em pão italiano artesanal.</p>
+                        <div class="card-price">R$ 20</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SOBREMESAS ========== -->
+
+        <div id="sobremesas" class="category">
+            <div class="category-header">
+                <div class="category-title">🍰 Sobremesas</div>
+                <div class="category-subtitle">Finalize sua experiência com doçura</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Browniecobertura.jpg" alt="Brownie com cobertura" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Brownie com cobertura</h3>
+                        <p class="card-desc">Feito com cacau 100% puro. Com coberturas divinas!.</p>
+                        <div class="card-price">A partir de R$15</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Tiramisu.jpg" alt="Tiramisu" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Tiramisu</h3>
+                        <p class="card-desc">Clássico italiano com camadas delicadas de biscoito embebido em café finalizando com cacau.</p>
+                        <div class="card-price">R$ 20</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-image">
+                    <img src="fotos/Croissantnutella.jpg" alt="Croissant Doce" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Croissant Doce</h3>
+                        <p class="card-desc">Escolha entre recheio de Nutella ou Ninho e morangos frescos, finalizado com chocolate e cobertura.</p>
+                        <div class="card-price">R$ 26</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== CROISSANTS ========== -->
+        <div id="croissants" class="category">
+            <div class="category-header">
+                <div class="category-title">🥐 Croissants</div>
+                <div class="category-subtitle">Massa folhada feita inteiramente na casa</div>
+            </div>
+
+            <div class="grid">
+                <div class="card highlight">
+                    <div class="card-image" >  
+                     <img src="fotos/Croissantsmashroyal.jpg" alt="Croissant Smash Royal" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-new">🔥 NOVA NOVIDADE</span>
+                        <span class="card-badge badge-bestseller">TOP VENDIDO</span>
+                        <h3 class="card-name">Croissant Smash Royal</h3>
+                        <p class="card-desc">2x smashs de carne bovina, queijo prato, farofa crocante e maionese de bacon. O maior hit.</p>
+                        <div class="card-price">R$ 29</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-image" >
+                    <img src="fotos/Croissantcarne.png" alt="Croissant Carne" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-bestseller">TOP 2</span>
+                        <h3 class="card-name">Carne Bovina Desfiada</h3>
+                        <p class="card-desc">Carne bovina desfiada, queijo prato, tomate fresco, rúcula e molho pesto artesanal.</p>
+                        <div class="card-price">R$ 26</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image" >
+                    <img src="fotos/Croissant4queijos.jpg" alt="Croissant 4 Queijos" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">4 Queijos</h3>
+                        <p class="card-desc">Creme de queijo artesanal com explosão de sabores, servido com redução de vinho.</p>
+                        <div class="card-price">R$ 24</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-image" >
+                    <img src="fotos/Croissantfrango.png" alt="Croissant Frango" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-bestseller">TOP 3</span>
+                        <h3 class="card-name">Frango Desfiado c/ Requeijão</h3>
+                        <p class="card-desc">Frango desfiado, requeijão cremoso, tomate fresco, rúcula e molho pesto.</p>
+                        <div class="card-price">R$ 25</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Croissantpresunto.jpg" alt="Croissant Presunto e Queijo" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Presunto e Queijo</h3>
+                        <p class="card-desc">Presunto de qualidade, queijo prato derretido, acompanhado de molho pesto.</p>
+                        <div class="card-price">R$ 22</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="addon-block">
+                <strong>➕ ADICIONE NO SEU CROISSANT:</strong>
+                Frango/Carne +R$6 | Bacon +R$5 | Molho de queijo +R$4 | Salada +R$2
+            </div>
+        </div>
+
+        <!-- ========== BEBIDAS SEM CAFÉ ========== -->
+        <div id="sem-cafe" class="category">
+            <div class="category-header">
+                <div class="category-title">☕ Bebidas - Sem Café</div>
+                <div class="category-subtitle">Refrescantes e saborosas</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image" >
+                    <img src="fotos/frape.jpg" alt="Frapês" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Frapês</h3>
+                        <p class="card-desc">Textura cremosa com base de sorvete. Sabores: Morango, Ovomaltine, Nutella ou Café.</p>
+                        <div class="card-price">R$ 20</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/leitecaramelado.jpg" alt="Leite Caramelado" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Leite Caramelado</h3>
+                        <p class="card-desc">Leite cremoso saborizado com caramelo salgado artesanal. Sem café.</p>
+                        <div class="card-price">R$ 14</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/chocolatequente.jpg" alt="Chocolate Quente" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Chocolate Quente</h3>
+                        <p class="card-desc">Bebida feita com chocolate cremoso de alta qualidade derretido em leite quente.</p>
+                        <div class="card-price">R$ 15 - 18</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/sodaitaliana.jpg" alt="Soda Italiana" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Soda Italiana</h3>
+                        <p class="card-desc">Refresco feito a base de xarope e água gaseificada. Sabores: Morango, Frutas Vermelhas.</p>
+                        <div class="card-price">R$ 12</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== CAFÉS TRADICIONAIS ========== -->
+        <div id="cafes-trad" class="category">
+            <div class="category-header">
+                <div class="category-title">☕ Cafés Tradicionais</div>
+                <div class="category-subtitle">Qualidade em cada xícara</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/cappuccino.jpg" alt="Cappuccino Italiano" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Cappuccino Italiano</h3>
+                        <p class="card-desc">Espresso, leite vaporizado, cacau premium e canela. Clássico que nunca falha.</p>
+                        <div class="card-price">R$ 14</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Cappuccinodechocolate.png" alt="Cappuccino de Chocolate" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Cappuccino de Chocolate</h3>
+                        <p class="card-desc">Receita exclusiva da casa: cappuccino achocolatado com toque pessoal.</p>
+                        <div class="card-price">R$ 14</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/mochagelado.jpg" alt="Mocha" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Mocha</h3>
+                        <p class="card-desc">Leite cremoso, ganache suave de chocolate artesanal e café bem equilibrado. Quente ou gelado</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/caramelmachiato.jpg" alt="Caramel Machiato" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Caramel Machiato</h3>
+                        <p class="card-desc">Espresso, leite vaporizado e xarope de caramelo artesanal feito na casa. Quente ou gelado.</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/cafecomleite.jpg" alt="Café com Leite" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Café com Leite</h3>
+                        <p class="card-desc">Café espresso suave com leite vaporizado. A dupla perfeita.</p>
+                        <div class="card-price">R$ 12</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #3E2723 0%, #6D4C41 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px;">
+                        Café Espresso
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Café Espresso</h3>
+                        <p class="card-desc">Curto (20ml) | Longo (40ml) | Gelado (americano). Escolha o seu jeito.</p>
+                        <div class="card-price">R$ 6 - 8</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BUBBLE ========== -->
+        <div id="bubble" class="category">
+            <div class="category-header">
+                <div class="category-title">🫧 Bubble</div>
+                <div class="category-subtitle">Bebida personalizada</div>
+            </div>
+
+            <div class="grid">
+                <div class="card highlight">
+                    <div class="card-image">
+                    <img src="fotos/bubble.jpg" alt="Bubble Frutada" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-upsell">PERSONALIZE</span>
+                        <h3 class="card-name">Bubble Frutada</h3>
+                        <p class="card-desc"><strong>Bases:</strong> Hibisco, Suco, Matcha, Yakult<br><strong>Xaropes:</strong> Morango, Frutas Vermelhas<br><strong>Bubbles:</strong> Morango, Blueberry</p>
+                        <div class="card-price">R$ 22</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BEBIDAS ORIENTAIS ========== -->
+        <div id="oriental" class="category">
+            <div class="category-header">
+                <div class="category-title">🍵 Bebidas Orientais</div>
+                <div class="category-subtitle">Sabores únicos e benefícios</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/matcha.jpg" alt="Matcha" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Matcha</h3>
+                        <p class="card-desc">Chá verde concentrado, antioxidante e energizante. Puro bem-estar. Quente ou gelado.</p>
+                        <div class="card-price">R$ 8</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Matchalatte.jpg" alt="Matcha Latte" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Matcha Latte</h3>
+                        <p class="card-desc">Combinação perfeita de matcha com leite cremoso. Quente ou gelado.</p>
+                        <div class="card-price">R$ 12</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-image">
+                     <img src="fotos/Strawberrymatcha.jpg" alt="Strawberry Matcha Latte" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-new">🔥 TRENDING</span>
+                        <h3 class="card-name">Strawberry Matcha Latte</h3>
+                        <p class="card-desc">Matcha latte com geleia de morango artesanal. Refrescante e excêntrica. Viralizando!</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Dalgonacoffeequente.jpg" alt="Dalgona Coffee" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Dalgona Coffee</h3>
+                        <p class="card-desc">Café cremoso coreano servido com leite. Quente ou gelado. Trending global!</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== CAFÉS ESPECIAIS ========== -->
+        <div id="especiais" class="category">
+            <div class="category-header">
+                <div class="category-title">✨ Cafés Especiais</div>
+                <div class="category-subtitle">Grãos de qualidade excepcional</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #3E2723 0%, #6D4C41 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px;">
+                        Grãos Especiais
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Grãos Especiais</h3>
+                        <p class="card-desc"><strong>Métodos:</strong> V60, Chemex, Aeropress, Koar. Cada grão possui um sabor diferente!</p>
+                        <div class="card-price">R$ 18+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BEBIDAS + DOCES ========== -->
+        <div id="doces" class="category">
+            <div class="category-header">
+                <div class="category-title">💛 Bebidas + Doces</div>
+                <div class="category-subtitle">Criações exclusivas do Gudy</div>
+            </div>
+
+            <div class="grid">
+                <div class="card highlight">
+                    <div class="card-image">
+                    <img src="fotos/Goldenlatte.jpg" alt="Golden Latte" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-premium">EXCLUSIVO</span>
+                        <h3 class="card-name">Golden Latte</h3>
+                        <p class="card-desc">Café com leite e toque de caramelo cremoso artesanal feito diretamente na Gudy!</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card highlight">
+                    <div class="card-image">
+                    <img src="fotos/Gudycream.jpg" alt="Gudy Cream" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-badge badge-premium">SIGNATURE</span>
+                        <h3 class="card-name">Gudy Cream</h3>
+                        <p class="card-desc">Creme de ninho, caramelo artesanal, leite cremoso e café espresso quente. Vício garantido.</p>
+                        <div class="card-price">R$ 20</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Chocoaffogato.png" alt="Choco Affogato" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Choco Affogato</h3>
+                        <p class="card-desc">Café espresso quente, delicioso sorvete de baunilha e chocolate em calda!</p>
+                        <div class="card-price">R$ 16</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Cappuccinoespecial.jpg" alt="Cappuccino Especial" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Cappuccino Especial</h3>
+                        <p class="card-desc">Cappuccino de chocolate, borda de nutella e cobertura de chantilly. Premium demais.</p>
+                        <div class="card-price">R$ 22</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== SUCOS NATURAIS ========== -->
+        <div id="sucos" class="category">
+            <div class="category-header">
+                <div class="category-title">🍊 Sucos Naturais</div>
+                <div class="category-subtitle">Sabor natural</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-image" style="background: linear-gradient(135deg, #FFB347 0%, #FFA500 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">
+                        Naturais
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Sucos Tradicionais</h3>
+                        <p class="card-desc">Laranja, Abacaxi, Limonada. Suco natural fresco do dia!</p>
+                        <div class="card-price">R$ 12</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                    <img src="fotos/Sucodetox.jpg" alt="Sucos Detox" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-name">Sucos Detox</h3>
+                        <p class="card-desc">Abacaxi com couve, Laranja com cenoura. Bem-estar natural!</p>
+                        <div class="card-price">R$ 18</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <h3>☕ GUDY COFFEE</h3>
+        <p><strong>📍 Av. Visconde do Rio Branco, 718 - Centro - Galeria Juarez Pimenta</strong><br>Teófilo Otoni, MG</p>
+        <p><strong>☎️ (33) 999816-9501</strong></p>
+        <p style="margin-top: 20px; font-size: 13px;">Massa folhada feita inteiramente na casa<br>Bebidas autorais exclusivas<br>Experiência que merece ser vivida</p>
+    </footer>
+
+    <script>
+        function showCategory(event, categoryId) {
+            document.querySelectorAll('.category').forEach(cat => cat.classList.remove('active'));
+            document.querySelectorAll('.nav-pill').forEach(pill => pill.classList.remove('active'));
+            document.getElementById(categoryId).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
